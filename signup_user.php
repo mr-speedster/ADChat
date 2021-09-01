@@ -5,7 +5,7 @@ include("include/connection.php");
     $pass = htmlentities(mysqli_real_escape_string($con, $_POST['user_pass']));
     $email = htmlentities(mysqli_real_escape_string($con, $_POST['user_email']));
     $rand = rand(1, 2);
-
+    $conformPass=htmlentities(mysqli_real_escape_string($con, $_POST['conform_pass']));
     if($name == ''){
       echo "<script>alert('We can not verify your name!')</script>";
     }
@@ -13,7 +13,10 @@ include("include/connection.php");
       echo "<script>alert('Password should be minimum 8 characters!')</script>";
       exit();
     }
-
+    if($pass!==$conformPass){
+      echo"<script>alert('Passwords did not match')</script>";
+      exit();
+    }
     $check_email = "select * from user where user_email = '$email'";
     $run_email = mysqli_query($con, $check_email);
 

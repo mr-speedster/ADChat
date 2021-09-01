@@ -1,5 +1,5 @@
 .main-section{
-  border: 1px solid rgb(250, 248, 248);
+  border: 5px solid #32be8f;
   width: 100%;
 }
 .left-sidebar{
@@ -169,7 +169,7 @@ h3{
   content: " ";
   position: absolute;
   top: 14px;
-  left: 15px;
+  right: 15px;
   bottom: 150px;
   border: 15px solid transparent;
   border-bottom-color: #94C2ED;
@@ -178,4 +178,39 @@ h3{
   .main-section{
     display: none;
   }
+}
+.profile-icon{
+  width: 50px;
+  height: 50px;
+}
+/*******************************************************************/
+
+.words {
+  color: #11e7f2;
+  font-size: 0;
+  line-height: 1;
+}
+
+.words span {
+  font-size: 4rem;
+  display: inline-block;
+  animation: move 5s ease-in-out infinite;
+}
+
+@keyframes move {
+  0% {
+    transform: translate(-30%, 0);
+  }
+
+  50% {
+    text-shadow: 0 15px 50px #38d39f;
+  }
+
+  100% {
+    transform: translate(30%, 0);
+  }
+}
+
+.words span:nth-child(2) {
+  animation-delay: 0.5s;
 }
