@@ -1,6 +1,6 @@
 <?php
- $con = mysqli_connect("sql102.epizy.com", "epiz_28239265", "AF7eKsG9h3n", "epiz_28239265_app") or
- die("Connection was not established");
+ $con=mysqli_connect("localhost","root","","chatapp")or 
+ die("Something Wrong".$con->connect_error);
 
   $user = "select * from user";
 
@@ -11,8 +11,13 @@
     $user_name = $row_user['user_name'];
     $user_profile = $row_user['user_profile'];
     $login = $row_user['log_in'];
+    $user_emailid=$row_user['user_email'];
 
-    echo "
+    if($_SESSION['user_email']===$user_emailid){
+      echo"";
+    }else{
+
+      echo "
       <li>
         <div class='chat-left-img'>
         <img src='$user_profile'>
@@ -29,5 +34,8 @@
         </div>
       </li>
       ";
+    }
+
+    
     }
 ?>

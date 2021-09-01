@@ -1,31 +1,46 @@
 <!DOCTYPE html>
 <?php
-  session_start();
-  include("include/connection.php");
+session_start();
+include("include/connection.php");
 
-  if(!isset($_SESSION['user_email'])){
-    header("location: index.php");
-  }
-  else {
+if (!isset($_SESSION['user_email'])) {
+  header("location: index.php");
+} else {
 ?>
-<html lang="en" dir="ltr">
+  <html lang="en" dir="ltr">
+
   <head>
     <meta charset="utf-8">
-    <title>Chat Application - Home</title>
-    <link rel="stylesheet" type="text/css"
-          href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0" />
+    <title>ADchat | home</title>
+    <link rel="icon" href="images/WhatsApp.png">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/home.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
     </script>
   </head>
+
   <body>
     <div class="container main-section">
       <div class="row">
         <div class="col-md-3 col-sm-3 col-xs-12 left-sidebar">
           <div class="input-group searchbox">
-            <h3>AD Chat</h3>
+            <div class="container-fluid words word-2">
+            <?php
+                $email=$_SESSION['user_email'];
+                $userI="select * from user where user_email='$email'";
+                $result=mysqli_query($con,$userI);
+                $rowI=mysqli_fetch_array($result);
+                $usernameI=$rowI['user_name'];
+                $userprofileI=$rowI['user_profile'];
+                ?>
+                <div class="right-header-img">
+                  <img src="images/key.png" alt="" class="profile-icon">
+                  <span>&nbsp;&nbsp;<?=$usernameI?> </span>
+                </div>
+                
+            </div>
           </div>
           <div class="left-chat">
             <ul>
@@ -37,95 +52,99 @@
           <div class="row">
             <!-- getting the user information who is logged in-->
             <?php
-              $user = $_SESSION['user_email'];
-              $get_user = "select * from user where user_email='$user'";
-              $run_user = mysqli_query($con, $get_user);
-              $row = mysqli_fetch_array($run_user);
+            $user = $_SESSION['user_email'];
+            $get_user = "select * from user where user_email='$user'";
+            $run_user = mysqli_query($con, $get_user);
+            $row = mysqli_fetch_array($run_user);
 
-              $user_id = $row['user_id'];
-              $user_name = $row['user_name'];
+            $user_id = $row['user_id'];
+            $user_name = $row['user_name'];
             ?>
 
             <!-- getting the user data on which user click-->
             <?php
-              if(isset($_GET['user_name'])){
-                global $con;
-                $get_username = $_GET['user_name'];
-                $get_user = "select * from user where user_name='$get_username'";
+            if (isset($_GET['user_name'])) {
+              global $con;
+              $get_username = $_GET['user_name'];
+              $get_user = "select * from user where user_name='$get_username'";
 
-                $run_user = mysqli_query($con, $get_user);
+              $run_user = mysqli_query($con, $get_user);
 
-                $row_user = mysqli_fetch_array($run_user);
+              $row_user = mysqli_fetch_array($run_user);
 
-                $username = $row_user['user_name'];
-                $user_profile_image = $row_user['user_profile'];
-              }
+              $username = $row_user['user_name'];
+              $user_profile_image = $row_user['user_profile'];
+            }
 
-              $total_messages = "select * from users_chat where
+            $total_messages = "select * from users_chat where
               (sender_username='$user_name' AND receiver_username='$username')
               OR (receiver_username='$user_name' AND sender_username='$username')";
-              $run_messages = mysqli_query($con, $total_messages);
-              $total = mysqli_num_rows($run_messages);
+            $run_messages = mysqli_query($con, $total_messages);
+            $total = mysqli_num_rows($run_messages);
             ?>
 
             <div class="col-md-12 right-header">
-                <div class="right-header-img">
-                  <img src="<?php echo "$user_profile_image"; ?>">
-                </div>
-                <div class="right-header-detail">
-                  <form method="post">
-                    <p><?php echo "$username"; ?></p>
-                    <span><?php echo $total; ?> messages</span>&nbsp &nbsp
-                    <button name="logout" class="btn btn-danger">Logout</button>
-                  </form>
-                  <?php
-                    if(isset($_POST['logout'])){
-                      $update_msg = mysqli_query($con, "UPDATE user SET log_in=
+              <div class="right-header-img">
+                <img src="<?php echo "$user_profile_image"; ?>">
+              </div>
+              <div class="right-header-detail">
+                <form method="post">
+                  <p><?php echo "$username"; ?></p>
+                  <span><?php echo $total; ?> messages</span>&nbsp &nbsp
+                  <button name="logout" class="btn btn-danger">Logout</button>
+                </form>
+                <?php
+                if (isset($_POST['logout'])) {
+                  $update_msg = mysqli_query($con, "UPDATE user SET log_in=
                       'Offline' WHERE user_name='$user_name'");
-                      header("Location:logout.php");
-                      exit();
-                    }
-                  ?>
-                </div>
+                  header("Location:logout.php");
+                  exit();
+                }
+                ?>
+              </div>
             </div>
-            
+
           </div>
           <div class="row">
-            <div id="scrolling_to_bottom" class="col-md-12 right-header-contentChat">
+            <div style="background-color: #e5ddd5;
+    background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/1089577/background.png);
+    " id="scrolling_to_bottom" class="col-md-12 right-header-contentChat">
               <?php
-                $update_msg = mysqli_query($con, "UPDATE users_chat SET
+              $update_msg = mysqli_query($con, "UPDATE users_chat SET
                   msg_status='read' WHERE sender_username='$username' AND
                   receiver_username='$user_name'");
-                $sel_msg = "select * from users_chat where (sender_username=
+              $sel_msg = "select * from users_chat where (sender_username=
                   '$user_name' AND receiver_username='$username') OR
                   (receiver_username='$user_name' AND sender_username='$username')
                   ORDER by 1 ASC";
-                $run_msg = mysqli_query($con, $sel_msg);
+              $run_msg = mysqli_query($con, $sel_msg);
 
-                while ($row = mysqli_fetch_array($run_msg)) {
-                  $sender_username = $row['sender_username'];
-                  $receiver_username = $row['receiver_username'];
-                  $msg_content = $row['msg_content'];
-                  $msg_date = $row['msg_date'];
+              while ($row = mysqli_fetch_array($run_msg)) {
+                $sender_username = $row['sender_username'];
+                $receiver_username = $row['receiver_username'];
+                $msg_content = $row['msg_content'];
+                $msg_date = $row['msg_date'];
 
               ?>
-              <ul>
-                <?php
-                  if($user_name == $sender_username AND $username ==
-                     $receiver_username){
+                <ul>
+                  <?php
+                  if (
+                    $user_name == $sender_username and $username ==
+                    $receiver_username
+                  ) {
                     echo "
                       <li>
                         <div class='rightside-right-chat'>
-                          <span>$username <small>$msg_date</small></span>
+                          <span>$user_name <small>$msg_date</small></span>
                           <br><br>
                           <p>$msg_content</p>
                         </div>
                       </li>
                     ";
-                  }
-
-                  else if($user_name == $receiver_username AND $username ==
-                     $sender_username){
+                  } else if (
+                    $user_name == $receiver_username and $username ==
+                    $sender_username
+                  ) {
                     echo "
                       <li>
                         <div class='rightside-left-chat'>
@@ -136,18 +155,16 @@
                       </li>
                     ";
                   }
-                ?>
-              </ul>
+                  ?>
+                </ul>
               <?php } ?>
             </div>
           </div>
           <div class="row">
             <div class="col-md-12 right-chat-textbox">
               <form method="post">
-                <input autocomplete="off" type="text" name="msg_content"
-                placeholder="Write your message...">
-                <button class="btn" name="submit"><i class="fa fa-telegram"
-                aria-hidden="true"></i></button>
+                <input autocomplete="off" type="text" name="msg_content" placeholder="Write your message...">
+                <button class="btn" name="submit"><i class="fa fa-telegram" aria-hidden="true"></i></button>
               </form>
             </div>
           </div>
@@ -156,43 +173,43 @@
     </div>
 
     <?php
-      if(isset($_POST['submit'])){
-        $msg = htmlentities($_POST['msg_content']);
+    if (isset($_POST['submit'])) {
+      $msg = htmlentities($_POST['msg_content']);
 
-        if($msg == ""){
-          echo "
+      if ($msg == "") {
+        echo "
             <div class='alert alert-danger'>
               <strong><center>Message was unable to send</center></strong>
             </div>
           ";
-        }
-        else if(strlen($msg) > 100){
-          echo "
+      } else if (strlen($msg) > 100) {
+        echo "
             <div class='alert alert-danger'>
               <strong><center>Message is too long. Use only 100 characters!</center></strong>
             </div>
           ";
-        }
-        else{
-          $insert = "insert into users_chat(sender_username, receiver_username,
+      } else {
+        $insert = "insert into users_chat(sender_username, receiver_username,
           msg_content, msg_status, msg_date) values('$user_name', '$username',
           '$msg', 'unread', NOW())";
-          $run_insert = mysqli_query($con, $insert);
-        }
+        $run_insert = mysqli_query($con, $insert);
       }
+    }
     ?>
 
     <script>
       $('#scrolling_to_bottom').animate({
-        scrollTop: $('#scrolling_to_bottom').get(0).scrollHeight}, 1000);
+        scrollTop: $('#scrolling_to_bottom').get(0).scrollHeight
+      }, 1000);
     </script>
     <script type="text/javascript">
-      $(document).ready(function(){
+      $(document).ready(function() {
         var height = $(window).height();
         $('.left-chat').css('height', (height - 92) + 'px');
         $('.right-header-contentChat').css('height', (height - 163) + 'px');
       });
     </script>
   </body>
-</html>
+
+  </html>
 <?php } ?>

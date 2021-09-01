@@ -1,103 +1,84 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <title>MyChat</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--===============================================================================================-->
-    <link rel="icon" type="image/png" href="images/icons/favicon.ico" />
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="css/util.css">
-    <link rel="stylesheet" type="text/css" href="css/main.css">
-    <!--===============================================================================================-->
+	<title>ADchat | SignIn</title>
+	<link rel="icon" href="images/WhatsApp.png">
+	<link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
+	<script src="https://kit.fontawesome.com/a81368914c.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
-
-    <div class="limiter">
-        <div class="container-login100">
-            <div class="wrap-login100">
-                <div class="login100-pic js-tilt" data-tilt>
-                    <img src="images/img-01.png" alt="IMG">
-                </div>
-
-                <form class="login100-form validate-form" method="POST">
-                    <span class="login100-form-title">
-						Sign In
-					</span>
-
-                    <div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
-                        <input class="input100" type="text" name="email" placeholder="Email">
-                        <span class="focus-input100"></span>
-                        <span class="symbol-input100">
-							<i class="fa fa-envelope" aria-hidden="true"></i>
-						</span>
+<img class="wave" src="images/wave.png">
+	<div class="container">
+		<div class="img">
+            <img src="images/lion.svg" alt="" class="img-fluid">
+		</div>
+		<div class="login-content">
+			<form method="POST">
+				<div class="words word-2">
+					<span>A</span>
+					<span>D</span>
+					<span>C</span>
+					<span>h</span>
+					<span>a</span>
+					<span>t</span>
+				</div>
+				<div class="input-div one">
+				<div class="i">
+                        <i class="bi bi-envelope-fill"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-fill" viewBox="0 0 16 16">
+                                <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.801V4.697l-5.803 3.546z" />
+                            </svg></i>
                     </div>
-
-                    <div class="wrap-input100 validate-input" data-validate="Password is required">
-                        <input class="input100" type="password" name="pass" placeholder="Password">
-                        <span class="focus-input100"></span>
-                        <span class="symbol-input100">
-							<i class="fa fa-lock" aria-hidden="true"></i>
-						</span>
-                    </div>
-
-                    <div class="container-login100-form-btn">
-                        <button class="login100-form-btn" name="sign_in" type="submit">
-							Sign In
-						</button>
-                    </div>
-
-                    <div class="text-center p-t-10">
-                        <span class="txt1">
-							Forgot
-						</span>
-                        <a class="txt2" href="forgot_pass.php">
-							Password?
-						</a>
-                    </div>
-                    <div class="text-center p-t-50">
-                        <a class="txt2" href="signup.php">
-							Create your Account
-							<i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
-						</a>
-                    </div>
-                    <?php include("signin_user.php");?>
-                </form>
-            </div>
-        </div>
-    </div>
+					<div class="div">
+						<h5>email</h5>
+						<input required type="text" name="email" class="input">
+					</div>
+				</div>
+				<div class="input-div pass">
+					<div class="i">
+						<i class="fas fa-lock"></i>
+					</div>
+					<div class="div">
+						<h5>Password</h5>
+						<input required type="password" name="pass" class="input">
+					</div>
+				</div>
+				<a href="forgot_pass.php">Forgot Password?</a>
+                <div class="text-center small" style="color: #0cfaea;">Don't have an account?
+					<a href="signup.php">Create Account</a>
+				</div>
+				<button name="sign_in" type="submit" class="btn">Login</button>
+                <?php
+                    include("signin_user.php");
+                ?>
+			</form>
+		</div>
+	</div>
+	<script>
+		const inputs = document.querySelectorAll(".input");
 
 
+		function addcl() {
+			let parent = this.parentNode.parentNode;
+			parent.classList.add("focus");
+		}
+
+		function remcl() {
+			let parent = this.parentNode.parentNode;
+			if (this.value == "") {
+				parent.classList.remove("focus");
+			}
+		}
 
 
-    <!--===============================================================================================-->
-    <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
-    <!--===============================================================================================-->
-    <script src="vendor/bootstrap/js/popper.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-    <!--===============================================================================================-->
-    <script src="vendor/select2/select2.min.js"></script>
-    <!--===============================================================================================-->
-    <script src="vendor/tilt/tilt.jquery.min.js"></script>
-    <script>
-        $('.js-tilt').tilt({
-            scale: 1.1
-        })
-    </script>
-    <!--===============================================================================================-->
-    <script src="js/main.js"></script>
+		inputs.forEach(input => {
+			input.addEventListener("focus", addcl);
+			input.addEventListener("blur", remcl);
+		});
+	</script>
 
 </body>
 
